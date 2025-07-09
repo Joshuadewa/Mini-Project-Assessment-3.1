@@ -1,0 +1,54 @@
+let display = document.getElementById('display');
+let currentNumber = '';
+let previousNumber = '';
+let operation = '';
+
+document.querySelectorAll('.digit').forEach(button => {
+    button.addEventListener('click', () => {
+        currentNumber += button.value;
+        display.value = currentNumber;
+    });
+});
+
+document.querySelectorAll('.operation').forEach(button => {
+    button.addEventListener('click', () => {
+        previousNumber = currentNumber;
+        currentNumber = '';
+        operation = button.value;
+    });
+});
+
+document.querySelector('.equal').addEventListener('click', () => {
+    let result;
+    switch (operation) {
+        case '+':
+            result = parseFloat(previousNumber) + parseFloat(currentNumber);
+            break;
+        case '-':
+            result = parseFloat(previousNumber) - parseFloat(currentNumber);
+            break;
+        case '*':
+            result = parseFloat(previousNumber) * parseFloat(currentNumber);
+            break;
+        case '/':
+            if (currentNumber === '0') {
+                result = 'Error';
+            } else {
+                result = parseFloat(previousNumber) / parseFloat(currentNumber);
+            }
+            break;
+        default:
+            result = 0;
+    }
+    display.value = result;
+    currentNumber = result.toString();
+    previousNumber = '';
+    operation = '';
+});
+
+document.querySelector('.clear').addEventListener('click', () => {
+    display.value = '';
+    currentNumber = '';
+    previousNumber = '';
+    operation = '';
+});
